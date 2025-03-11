@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\article;
+use App\Models\Article;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource.   
      */
     public function index()
     {
-        return response()->json(article::all(), 200);
+        return response()->json(Article::all(), 200);
     }
 
     /**
@@ -40,9 +40,8 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Article $article)
     {
-        $article = article::find($id);
         if (!$article) {
             return response()->json(['message' => 'Utilisateur non trouvé'], 404);
         }
@@ -68,7 +67,7 @@ class ArticleController extends Controller
      */
     public function destroy(string $id)
     {
-        $article = article::find($id);
+        $article = article::findOrFail($id);
         if (!$article) {
             return response()->json(['message' => 'Utilisateur non trouvé'], 404);
         }
